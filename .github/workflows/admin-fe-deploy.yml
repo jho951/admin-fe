@@ -9,8 +9,7 @@ on:
       - ".github/workflows/**"
 
 permissions:
-  contents: write
-  packages: write
+  contents: read
 
 env:
   DOCKER_IMAGE_NAME: admin-fe
@@ -55,12 +54,11 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
 
       - name: Build & Push image
         uses: docker/build-push-action@v5
         with:
-          # 레포 루트에 Dockerfile 이 있다고 가정
           context: .
           push: true
           tags: |
