@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Pretendard/Pretendard-Regular.woff2')
+    format('woff2');
+}

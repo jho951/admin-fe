@@ -1,0 +1,122 @@
+.sidebar {
+    position: relative;
+    margin: 1.5rem 0 1.5rem 1.5rem;
+    border-radius: var(--base-radius);
+    background-color: var(--color-surface);
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    transition:
+            width var(--transition-duration) var(--transition-ease),
+            border-radius var(--transition-duration) var(--transition-ease);
+    color: var(--color-text);
+}
+
+.sidebarCollapsed {
+    width: 80px;
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1rem 1.2rem 1.2rem;
+    height: 100%;
+}
+
+/* 프로필 */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: radial-gradient(circle at top left, var(--color-accent), var(--color-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.profileRole {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(var(--color-text-rgb), 0.6);
+}
+
+.profileName {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* nav item */
+.navItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.55rem 0.7rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition:
+            background-color 0.15s ease-in-out,
+            color 0.15s ease-in-out;
+}
+
+.navItem:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.navItemActive {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+:global(html.dark) .sidebar {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+:global(html.dark) .navItem:hover {
+    background-color: var(--color-surface-hover);
+}
+
+
+.toggleButton {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+            background-color 0.15s ease,
+            box-shadow 0.15s ease,
+            transform 0.15s ease;
+}
+
+.toggleButton:hover {
+    background-color: var(--color-surface-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.toggleIcon {
+    width: 14px;
+    height: 14px;
+    color: var(--color-text);
+}
