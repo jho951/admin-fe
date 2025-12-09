@@ -15,4 +15,12 @@ export default defineConfig({
             "@hooks": path.resolve(__dirname, "src/hooks"),
         },
     },
+    server: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080",
+                changeOrigin: true,
+            },
+        },
+    },
 });

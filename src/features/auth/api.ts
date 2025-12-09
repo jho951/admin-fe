@@ -1,8 +1,33 @@
-export const fakeLogin = async (email: string, password: string) => {
-    // TODO: replace with real API
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    if (!email || !password) {
-        throw new Error("이메일과 비밀번호를 입력하세요.");
+import { fetchClient } from "@shared/lib/fetchClient";
+
+export interface LoginPayload {
+    email: string;
+    password: string;
+}
+
+export interface LoginUser {
+    id: number;
+    username: string;
+    email: string;
+    role: "SUPER_ADMIN" | "ADMIN" | "MANAGER" | "USER";
+}
+
+export interface BaseResponse<T> {
+    success: boolean;
+    code: string;
+    message: string;
+    data: T;
+}
+
+export async function login(payload: LoginPayload): Promise<LoginUser> {
+    const res = await fetchClient.post<BaseResponse<LoginUser>>(
+        "/api/auth/login",
+        payload,
+    );
+
+    if (!res.success) {
+        throw new Error(res.message || "로그인에 실패했습니다.");
     }
-    return { email };
-};
+
+    return res.data;
+}
