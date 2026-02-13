@@ -1,3 +1,7 @@
+/**
+ * @file src/constants/sidebarItems.ts
+ * @description 프로젝트 전역 상수 정의을 담당하는 모듈입니다.
+ */
 import type { IconName } from "@shared/components/icon/Icon";
 
 interface SidebarItem {

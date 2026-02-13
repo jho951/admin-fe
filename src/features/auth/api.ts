@@ -1,3 +1,7 @@
+/**
+ * @file src/features/auth/api.ts
+ * @description 인증 기능 상태/요청/화면을 담당하는 모듈입니다.
+ */
 import { fetchClient } from "@shared/lib/fetchClient";
 
 export interface LoginPayload {

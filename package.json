@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "typecheck": "tsc -b",
+    "check": "npm run lint && npm run typecheck",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@jho951/ui-components": "^0.1.2",
     "@reduxjs/toolkit": "^2.11.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

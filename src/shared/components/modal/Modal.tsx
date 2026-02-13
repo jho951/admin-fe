@@ -1,33 +1,24 @@
-import React, { useEffect, useState, type ReactNode } from "react";
+/**
+ * @file src/shared/components/modal/Modal.tsx
+ * @description 여러 기능에서 재사용하는 UI 컴포넌트을 담당하는 모듈입니다.
+ */
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
+
+import type {ModalProps} from "@shared/components/modal/Modal.types.ts";
+
 import styles from "./Modal.module.css";
 
-interface ModalProps {
-    isOpen?: boolean;
-    onClose?: () => void;
-    children: ReactNode;
-    width?: number | string;
-}
+
 
 const Modal: React.FC<ModalProps> = ({
                                          isOpen,
                                          onClose,
                                          children,
                                          width = 420,
+                                         className,
                                      }) => {
-    const [mounted, setMounted] = useState(false);
-    const [container, setContainer] = useState<HTMLElement | null>(null);
 
-    // modal-root 찾기
-    useEffect(() => {
-        if (typeof document === "undefined") return;
-        const root = document.getElementById("modal-root");
-        if (!root) return;
-        setContainer(root);
-        setMounted(true);
-    }, []);
-
-    // ESC로 닫기
     useEffect(() => {
         const open = isOpen ?? true;
         if (!open || !onClose) return;
@@ -41,9 +32,13 @@ const Modal: React.FC<ModalProps> = ({
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isOpen, onClose]);
 
-    const open = isOpen ?? true; // ⬅ 안 넘기면 true
+    const open = isOpen ?? true;
+    const container =
+        typeof document !== "undefined"
+            ? document.getElementById("modal-root")
+            : null;
 
-    if (!mounted || !container || !open) {
+    if (!container || !open) {
         return null;
     }
 
@@ -58,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({
     return createPortal(
         <div className={styles.backdrop} onClick={handleBackdropClick}>
             <div
-                className={styles.modal}
+                className={`${styles.modal} ${className}`}
                 style={{ maxWidth: width }}
                 onClick={handleContentClick}
             >

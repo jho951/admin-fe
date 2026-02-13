@@ -1,3 +1,7 @@
+/**
+ * @file src/constants/loginFields.ts
+ * @description 프로젝트 전역 상수 정의을 담당하는 모듈입니다.
+ */
 export type LoginFieldId = "email" | "password";
 
 interface LoginField {

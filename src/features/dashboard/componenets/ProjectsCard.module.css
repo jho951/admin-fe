@@ -1,0 +1,221 @@
+/* src/pages/dashboard/ProjectsCard.module.css */
+
+.card {
+    background-color: var(--color-surface);
+    border-radius: 24px;
+    padding: 20px 18px;
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 상단 헤더 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+.subtitle {
+    margin-top: 2px;
+    font-size: 11px;
+    color: rgba(var(--color-text-rgb), 0.6);
+}
+
+/* 우측 탭 / 필터 버튼들 (예: Feedback, Bug, Design System) */
+.tabList {
+    display: inline-flex;
+    padding: 2px;
+    border-radius: 999px;
+    background-color: rgba(var(--color-bg-gray-rgb), 0.7);
+    gap: 4px;
+}
+
+.tab {
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 11px;
+    line-height: 1;
+    color: rgba(var(--color-text-rgb), 0.6);
+    background: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.tabActive {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* 가운데 카드 스택 영역 */
+.body {
+    margin-top: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: stretch;
+}
+
+/* 실제 메인 카드 */
+.mainCard {
+    background-color: var(--color-bg);
+    border-radius: 18px;
+    padding: 14px 14px 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 카드 상단 태그들 (Feedback / Bug / Design System) */
+.tagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 1.2;
+    background-color: rgba(var(--color-secondary-rgb), 0.18);
+    color: rgba(var(--color-text-rgb), 0.7);
+}
+
+.tagPrimary {
+    background-color: rgba(var(--color-primary-rgb), 0.16);
+    color: var(--color-primary);
+}
+
+.cardTitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+
+.cardMeta {
+    font-size: 11px;
+    color: rgba(var(--color-text-rgb), 0.6);
+}
+
+/* 하단 메타: 날짜, 코멘트 수, 파일 수 */
+.cardFooter {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(var(--color-text-rgb), 0.6);
+}
+
+.avatarGroup {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 2px solid var(--color-bg);
+    background-color: var(--color-bg-gray);
+    overflow: hidden;
+}
+
+.avatar + .avatar {
+    margin-left: -8px;
+}
+
+.metaList {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.metaItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 오른쪽 카드 스택 + 화살표 버튼 */
+.stack {
+    position: relative;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stackCard {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background-color: rgba(var(--color-bg-gray-rgb), 0.9);
+    border: 1px solid var(--color-border-light);
+}
+
+.stackCard:nth-child(1) {
+    transform: translateX(-8px);
+    opacity: 0.6;
+}
+
+.stackCard:nth-child(2) {
+    transform: translateX(0);
+    opacity: 0.8;
+}
+
+.stackCard:nth-child(3) {
+    transform: translateX(8px);
+    opacity: 1;
+}
+
+/* 다음 카드 버튼 */
+.nextButton {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.nextButton:hover {
+    filter: brightness(1.05);
+}
+
+/* 데스크톱에서 살짝 키우기 */
+@media (min-width: 1024px) {
+    .card {
+        padding: 22px 22px 20px;
+    }
+
+    .title {
+        font-size: 17px;
+    }
+
+    .mainCard {
+        padding: 16px 18px 14px;
+    }
+}

@@ -1,3 +1,7 @@
+/**
+ * @file src/shared/components/icon/Icons.tsx
+ * @description 여러 기능에서 재사용하는 UI 컴포넌트을 담당하는 모듈입니다.
+ */
 import React from "react";
 
 export type IconName =
@@ -8,12 +12,13 @@ export type IconName =
     | "right-arrow"
     | "eye-open"
     | "eye-closed"
-    | "close-circle";
+    | "close-circle"
+    | "search";
 
 type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>;
 
 // 예시 아이콘들
-const DashboardIcon: IconComponent = (props) => (
+export const DashboardIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <rect x="3" y="3" width="8" height="8" rx="2" />
         <rect x="13" y="3" width="8" height="5" rx="2" />
@@ -22,7 +27,7 @@ const DashboardIcon: IconComponent = (props) => (
     </svg>
 );
 
-const UsersIcon: IconComponent = (props) => (
+export const UsersIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <circle cx="9" cy="9" r="3.2" />
         <path d="M4 18c0-2.3 2.2-4 5-4" />
@@ -31,7 +36,7 @@ const UsersIcon: IconComponent = (props) => (
     </svg>
 );
 
-const SettingsIcon: IconComponent = (props) => (
+export const SettingsIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <circle cx="12" cy="12" r="3.2" />
         <path d="M4 12h2M18 12h2M12 4v2M12 18v2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M17.7 6.3l-1.4 1.4M6.3 17.7l1.4-1.4" />
@@ -39,7 +44,7 @@ const SettingsIcon: IconComponent = (props) => (
 );
 
 // ← / → 토글용
-const ChevronLeftIcon: IconComponent = (props) => (
+export const ChevronLeftIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <path
             d="M14.5 5.5L9 12l5.5 6.5"
@@ -52,7 +57,7 @@ const ChevronLeftIcon: IconComponent = (props) => (
     </svg>
 );
 
-const ChevronRightIcon: IconComponent = (props) => (
+export const ChevronRightIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <path
             d="M9.5 5.5L15 12l-5.5 6.5"
@@ -66,7 +71,7 @@ const ChevronRightIcon: IconComponent = (props) => (
 );
 
 /* 👁 눈 아이콘 (열림) */
-const EyeOpenIcon: IconComponent = (props) => (
+export const EyeOpenIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         {/* 눈 모양 */}
         <path
@@ -90,7 +95,7 @@ const EyeOpenIcon: IconComponent = (props) => (
 );
 
 /* 👁‍🗨 눈 아이콘 (가려짐) */
-const EyeClosedIcon: IconComponent = (props) => (
+export const EyeClosedIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         {/* 기본 눈 모양 */}
         <path
@@ -122,7 +127,7 @@ const EyeClosedIcon: IconComponent = (props) => (
 );
 
 /* ❌ 동그라미 안에 X */
-const CloseCircleIcon: IconComponent = (props) => (
+export const CloseCircleIcon: IconComponent = (props) => (
     <svg viewBox="0 0 24 24" {...props}>
         <circle
             cx="12"
@@ -142,13 +147,27 @@ const CloseCircleIcon: IconComponent = (props) => (
     </svg>
 );
 
-export const icons: Record<IconName, IconComponent> = {
-    dashboard: DashboardIcon,
-    users: UsersIcon,
-    settings: SettingsIcon,
-    "left-arrow": ChevronLeftIcon,
-    "right-arrow": ChevronRightIcon,
-    "eye-open": EyeOpenIcon,
-    "eye-closed": EyeClosedIcon,
-    "close-circle": CloseCircleIcon,
-};
+export const SearchIcon: IconComponent = (props) => (
+    <svg viewBox="0 0 24 24" {...props}>
+        {/* 돋보기 동그라미 */}
+        <circle
+            cx="11"
+            cy="11"
+            r="5.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+        />
+        <line
+            x1="15"
+            y1="15"
+            x2="19"
+            y2="19"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+        />
+    </svg>
+);
+
+export type { IconComponent };

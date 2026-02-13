@@ -1,3 +1,7 @@
+/**
+ * @file src/features/ui/uiSlice.ts
+ * @description UI 전역 상태 관리을 담당하는 모듈입니다.
+ */
 import { createSlice } from "@reduxjs/toolkit";
 
 interface UiState {

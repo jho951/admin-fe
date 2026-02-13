@@ -20,16 +20,16 @@
 
 .modal {
     width: 100%;
-    border-radius: 24px;
-    background:
-            radial-gradient(circle at top left, var(--color-glass-white), var(--color-bg));
+    border-radius: var(--base-radius);
+    background: radial-gradient(circle at top left, var(--color-glass-white), var(--color-bg));
     border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
-    padding: 1.8rem 1.6rem;
+    box-shadow: var(--base-shadow);
+    padding: 2rem;
 
-    transform: translateY(8px);
-    opacity: 0;
     animation: modalIn 0.24s var(--transition-ease) forwards;
+    transform: translateY(1rem);
+
+    opacity: 0;
 }
 
 @keyframes modalIn {
@@ -43,9 +43,3 @@
     }
 }
 
-@media (max-width: 640px) {
-    .modal {
-        border-radius: 20px;
-        padding: 1.4rem 1.2rem;
-    }
-}

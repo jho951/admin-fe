@@ -1,3 +1,7 @@
+/**
+ * @file src/shared/components/select/Select.tsx
+ * @description 여러 기능에서 재사용하는 UI 컴포넌트을 담당하는 모듈입니다.
+ */
 import React from "react";
 import styles from "./Select.module.css";
 

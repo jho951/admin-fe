@@ -1,20 +1,13 @@
+/**
+ * @file src/app/provider/ThemeProvider.tsx
+ * @description 애플리케이션 초기화 및 전역 설정을 담당하는 모듈입니다.
+ */
 import React, {
-    createContext,
-    useContext,
     useEffect,
     useState,
     type ReactNode,
 } from "react";
-
-type Theme = "light" | "dark";
-
-interface ThemeContextValue {
-    theme: Theme;
-    toggleTheme: () => void;
-    setTheme: (theme: Theme) => void;
-}
-
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+import { ThemeContext, type Theme, type ThemeContextValue } from "./themeContext";
 
 const THEME_STORAGE_KEY = "admin-theme";
 
@@ -41,7 +34,7 @@ const getInitialTheme = (): Theme => {
     return prefersDark ? "dark" : "light";
 };
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const [theme, setThemeState] = useState<Theme>(() => getInitialTheme());
 
     const setTheme = (next: Theme) => {
@@ -83,13 +76,3 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
     );
 };
-
-export const useTheme = (): ThemeContextValue => {
-    const ctx = useContext(ThemeContext);
-    if (!ctx) {
-        throw new Error("useTheme must be used within ThemeProvider");
-    }
-    return ctx;
-};
-
-export default ThemeProvider;

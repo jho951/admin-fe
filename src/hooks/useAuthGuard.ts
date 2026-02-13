@@ -1,3 +1,7 @@
+/**
+ * @file src/hooks/useAuthGuard.ts
+ * @description 재사용 가능한 커스텀 훅을 담당하는 모듈입니다.
+ */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@app/hooks";

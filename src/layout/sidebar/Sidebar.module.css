@@ -1,122 +1,214 @@
 .sidebar {
+    width: 22rem;
     position: relative;
-    margin: 1.5rem 0 1.5rem 1.5rem;
-    border-radius: var(--base-radius);
+    border-radius:var(--base-radius);
     background-color: var(--color-surface);
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--shadow-lg);
-    transition:
-            width var(--transition-duration) var(--transition-ease),
-            border-radius var(--transition-duration) var(--transition-ease);
-    color: var(--color-text);
-}
-
-.sidebarCollapsed {
-    width: 80px;
+    box-shadow: var(--color-bg);
+    transition: width 0.25s var(--transition-ease);
+    overflow: hidden;
 }
 
 .inner {
     display: flex;
     flex-direction: column;
-    padding: 1.2rem 1rem 1.2rem 1.2rem;
-    height: 100%;
+    flex: 1;
+
+    padding: 2rem 1rem;
+    transition: padding 0.25s var(--transition-ease);
+    gap: 2rem;
 }
 
-/* 프로필 */
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    background: radial-gradient(circle at top left, var(--color-accent), var(--color-primary));
+.profile {
     display: flex;
     align-items: center;
+    gap: 1.4rem;
+    padding: 1rem;
+    border-radius: var(--circle);
+    background-color: rgba(var(--color-bg-gray-rgb), 0.5);
+}
+
+.avatar {
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
     justify-content: center;
-    font-weight: 600;
-    color: var(--color-black);
+
+    border-radius: var(--circle);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: var(--color-white);
+
+    font-weight: 700;
+}
+
+.profileMeta {
+    max-width: 15rem;
+
+    display: flex;
+    flex-direction: column;
+
+    transition:
+            opacity 0.18s var(--transition-ease),
+            transform 0.18s var(--transition-ease),
+            max-width 0.18s var(--transition-ease);
+
+    opacity: 1;
+
+    gap: 2px;
 }
 
 .profileRole {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: rgba(var(--color-text-rgb), 0.6);
 }
 
 .profileName {
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 600;
+    color: var(--color-heading);
 }
 
-/* nav item */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sectionLabel {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(var(--color-text-rgb), 0.55);
+    padding: 0 10px;
+
+    transition:
+            opacity 0.18s var(--transition-ease),
+            max-height 0.18s var(--transition-ease);
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 .navItem {
-    position: relative;
     display: flex;
     align-items: center;
-    padding: 0.55rem 0.7rem;
-    border-radius: 999px;
+    gap: 1rem;
+    padding: 9px 10px;
+    border-radius: var(--base-radius);
+    font-size: 13px;
+    color: rgba(var(--color-text-rgb), 0.8);
     text-decoration: none;
-    color: inherit;
-    font-size: 0.9rem;
-    cursor: pointer;
     transition:
-            background-color 0.15s ease-in-out,
-            color 0.15s ease-in-out;
+            background-color 0.18s ease,
+            color 0.18s ease,
+            transform 0.12s ease;
 }
 
 .navItem:hover {
     background-color: var(--color-surface-hover);
+    transform: translateX(2px);
 }
 
 .navItemActive {
     background-color: var(--color-primary);
     color: var(--color-white);
+    box-shadow: var(--shadow-xs);
+}
+
+.iconWrap {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background-color: rgba(var(--color-bg-gray-rgb), 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.navItemActive .iconWrap {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .icon {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+    width: 14px;
+    height: 14px;
 }
 
-:global(html.dark) .sidebar {
-    background-color: var(--color-surface);
-    color: var(--color-text);
+/* 라벨 */
+.labelWrap {
+    flex: 1;
+
+    transition:
+            opacity 0.18s var(--transition-ease),
+            transform 0.18s var(--transition-ease),
+            max-width 0.18s var(--transition-ease);
+    max-width: 160px;
+    opacity: 1;
 }
 
-:global(html.dark) .navItem:hover {
-    background-color: var(--color-surface-hover);
+.labelText {
+    font-size: 13px;
+    font-weight: 500;
 }
 
+/* ============================= */
+/*   🔻 접힌 상태에서의 처리    */
+/* ============================= */
+.collapsed {
+    width: 8rem;
+}
 
+.collapsed .profileMeta,
+.collapsed .labelWrap,
+.collapsed .sectionLabel {
+    opacity: 0;
+    max-width: 0;
+    max-height: 0;
+    pointer-events: none;
+}
+
+.collapsed .profile,
+.collapsed .navItem{
+    justify-content: center;
+    padding-inline: 0;
+    gap:0;
+}
+
+/* 토글 버튼 */
 .toggleButton {
     position: absolute;
-    right: -16px;
     top: 50%;
+    right: -14px;
     transform: translateY(-50%);
     width: 28px;
     height: 28px;
     border-radius: 999px;
     border: 1px solid var(--color-border);
     background-color: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-    display: flex;
+    box-shadow: var(--shadow-md);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition:
-            background-color 0.15s ease,
-            box-shadow 0.15s ease,
-            transform 0.15s ease;
+            background-color 0.18s ease,
+            transform 0.12s ease;
 }
 
 .toggleButton:hover {
     background-color: var(--color-surface-hover);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-50%) scale(1.03);
 }
 
 .toggleIcon {
     width: 14px;
     height: 14px;
-    color: var(--color-text);
 }

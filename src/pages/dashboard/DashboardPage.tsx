@@ -1,25 +1,27 @@
+/**
+ * @file src/pages/dashboard/DashboardPage.tsx
+ * @description 라우트 단위 페이지 컴포넌트을 담당하는 모듈입니다.
+ */
 import React from "react";
+
+import DashboardHeader from "@features/dashboard/componenets/DashboardHeader.tsx";
+import LastTasksCard from "@features/dashboard/componenets/LastTasksCard.tsx";
+import ProductivityCard from "@features/dashboard/componenets/ProductivityCard.tsx";
+import ProjectsCard from "@features/dashboard/componenets/ProjectsCard.tsx";
+
 import styles from "./DashboardPage.module.css";
 
 const DashboardPage: React.FC = () => {
     return (
-        <div className={styles.wrapper}>
-            <h2 className={styles.heading}>요약</h2>
-            <div className={styles.cards}>
-                <div className={styles.card}>
-                    <span className={styles.cardLabel}>전체 사용자</span>
-                    <span className={styles.cardValue}>1,234</span>
-                </div>
-                <div className={styles.card}>
-                    <span className={styles.cardLabel}>오늘 방문</span>
-                    <span className={styles.cardValue}>87</span>
-                </div>
-                <div className={styles.card}>
-                    <span className={styles.cardLabel}>에러 로그</span>
-                    <span className={styles.cardValueError}>3</span>
-                </div>
+        <section className={styles.page}>
+            <DashboardHeader />
+            <LastTasksCard />
+
+            <div className={styles.bottomGrid}>
+                <ProductivityCard />
+                <ProjectsCard />
             </div>
-        </div>
+        </section>
     );
 };
 

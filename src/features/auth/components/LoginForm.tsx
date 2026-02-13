@@ -1,21 +1,21 @@
+/**
+ * @file src/features/auth/components/LoginForm.tsx
+ * @description 인증 기능 상태/요청/화면을 담당하는 모듈입니다.
+ */
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@app/hooks";
 import { login } from "../api";
 import { loginSuccess } from "../authSlice";
+import { Button, Input } from "@jho951/ui-components";
 
 import styles from "./LoginForm.module.css";
-import TextInput from "@shared/components/input/TextInput";
-import PasswordInput from "@shared/components/input/PasswordInput";
-import Button from "@shared/components/button/Button";
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const [errorField, setErrorField] = useState<"email" | "password" | null>(
-        null,
-    );
+    const [errorField, setErrorField] = useState<"email" | "password" | null>(null,);
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -59,36 +59,30 @@ const LoginForm: React.FC = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
             <h2 className={styles.title}>Admin</h2>
 
-            <div className={styles.field}>
-                <TextInput
+                <Input
                     id="email"
                     ref={emailRef}
                     label="이메일"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    hasError={errorField === "email"}
-                    clearable
-                    onClear={() => setEmail("")}
+                    error={errorField === "email" ? "이메일을 확인해 주세요." : undefined}
+                    fullWidth
                     autoComplete="username"
                 />
-            </div>
 
-            <div className={styles.field}>
-                <PasswordInput
+                <Input
                     id="password"
                     ref={passwordRef}
                     label="비밀번호"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    hasError={errorField === "password"}
-                    onClear={() => setPassword("")}
+                    error={errorField === "password" ? "비밀번호를 확인해 주세요." : undefined}
+                    fullWidth
                 />
-            </div>
 
-            <div className={styles.errorArea}>
-                {error && <p className={styles.error}>{error}</p>}
-            </div>
+                {error && <p className={styles.errorText}>{error}</p>}
 
             <Button className={styles.submit} type="submit">
                 로그인

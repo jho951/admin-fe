@@ -8,6 +8,7 @@
     --base-shadow:
             0 1px 4px rgba(var(--color-black-rgb), 0.1), inset 0 1px 1px rgba(var(--color-bg-rgb), 0.5);
     --base-blur: 20px;
+    --circle: 50%;
     --shadow: 0 4px 12px rgba(var(--color-black-rgb), 0.1);
     --transition-duration: 0.3s;
     --transition-ease: ease-in-out;

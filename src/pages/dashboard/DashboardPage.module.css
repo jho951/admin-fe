@@ -1,43 +1,24 @@
-.wrapper {
+.page {
+    /* MainLayout 안 content 영역을 꽉 채우되 여백만 주기 */
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 24px;
+    min-height: 100%;
 }
 
-.heading {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-}
-
-.card {
-    background-color: #ffffff;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+/* 하단 2열 레이아웃 */
+.bottomGrid {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 24px;
 }
 
-.cardLabel {
-    font-size: 0.85rem;
-    color: #6b7280;
-}
-
-.cardValue {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #111827;
-}
-
-.cardValueError {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #dc2626;
+/* 1024px 이상에서만 2열로 변경 (좌: 그래프, 우: 프로젝트 카드) */
+@media (min-width: 1024px) {
+    .bottomGrid {
+        display: grid;
+        grid-template-columns: 2fr 1.2fr;
+        align-items: stretch;
+    }
 }

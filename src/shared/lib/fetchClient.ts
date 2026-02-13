@@ -1,3 +1,10 @@
+/**
+ * @file src/shared/lib/fetchClient.ts
+ * @description 공통 유틸리티 및 인프라 로직을 담당하는 모듈입니다.
+ */
+import { setAccessToken, getAccessToken, clearAccessToken } from "./tokenStore";
+import { env } from "@shared/config/env";
+
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 interface FetchJsonOptions extends Omit<RequestInit, "body" | "method"> {
@@ -5,28 +12,26 @@ interface FetchJsonOptions extends Omit<RequestInit, "body" | "method"> {
     body?: unknown;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
+type ErrorWithStatus = Error & { status?: number };
 
-/**
- * 내부 공용 fetch 함수
- */
-export async function fetchJson<T>(
+const API_BASE_URL = env.apiUrl;
+
+async function rawFetchJson<T>(
     path: string,
     options: FetchJsonOptions = {},
 ): Promise<T> {
     const { method = "GET", body, headers, ...rest } = options;
 
-    const url = path.startsWith("http")
-        ? path
-        : `${API_BASE_URL}${path}`;
-
-    console.log(API_BASE_URL)
+    const url = path.startsWith("http") ? path : `${API_BASE_URL}${path}`;
 
     const mergedHeaders = new Headers(headers ?? {});
-    // JSON 기본 헤더
-    if (!mergedHeaders.has("Accept")) {
-        mergedHeaders.set("Accept", "application/json");
+    mergedHeaders.set("Accept", "application/json");
+
+    const token = getAccessToken();
+    if (token && !mergedHeaders.has("Authorization")) {
+        mergedHeaders.set("Authorization", `Bearer ${token}`);
     }
+
     if (body != null && !mergedHeaders.has("Content-Type")) {
         mergedHeaders.set("Content-Type", "application/json");
     }
@@ -35,7 +40,7 @@ export async function fetchJson<T>(
         method,
         headers: mergedHeaders,
         body: body != null ? JSON.stringify(body) : undefined,
-        credentials: "include",
+        credentials: "include", // 🔹 refresh 쿠키를 위해 필요
         ...rest,
     });
 
@@ -46,34 +51,63 @@ export async function fetchJson<T>(
         try {
             data = JSON.parse(text);
         } catch {
-            // JSON 아닐 수도 있으니 무시 (텍스트 응답 같은 경우)
             data = text;
         }
     }
 
     if (!res.ok) {
+        const payload =
+            typeof data === "object" && data !== null
+                ? (data as { message?: unknown })
+                : undefined;
         const message =
-            (typeof data === "object" &&
-                data !== null &&
-                "message" in data &&
-                typeof (data as any).message === "string" &&
-                (data as any).message) ||
+            (typeof payload?.message === "string" && payload.message) ||
             `Request failed: ${res.status}`;
 
-        throw new Error(message);
+        const error: ErrorWithStatus = new Error(message);
+        error.status = res.status;
+        throw error;
     }
 
     return data as T;
 }
 
-/**
- * 메서드별 편의 래퍼
- */
+// 401 나오면 refresh 시도 후 재요청
+export async function fetchJson<T>(
+    path: string,
+    options: FetchJsonOptions = {},
+): Promise<T> {
+    try {
+        return await rawFetchJson<T>(path, options);
+    } catch (err) {
+        const e = err as ErrorWithStatus;
+        if (e.status === 401) {
+            // refresh 시도
+            try {
+                const refreshRes = await rawFetchJson<{
+                    data: { accessToken: string };
+                }>("/api/auth/refresh", { method: "POST" });
+
+                const newToken = refreshRes.data.accessToken;
+                setAccessToken(newToken);
+
+                // 다시 한 번 원래 요청 재시도
+                return await rawFetchJson<T>(path, options);
+            } catch (refreshErr) {
+                // refresh 실패 → 완전 로그아웃 처리
+                clearAccessToken();
+                throw refreshErr;
+            }
+        }
+
+        throw e;
+    }
+}
+
 export const fetchClient = {
     get<T>(path: string, options?: Omit<FetchJsonOptions, "method" | "body">) {
         return fetchJson<T>(path, { ...options, method: "GET" });
     },
-
     post<T>(
         path: string,
         body?: unknown,
@@ -81,7 +115,6 @@ export const fetchClient = {
     ) {
         return fetchJson<T>(path, { ...options, method: "POST", body });
     },
-
     put<T>(
         path: string,
         body?: unknown,
@@ -89,7 +122,6 @@ export const fetchClient = {
     ) {
         return fetchJson<T>(path, { ...options, method: "PUT", body });
     },
-
     patch<T>(
         path: string,
         body?: unknown,
@@ -97,7 +129,6 @@ export const fetchClient = {
     ) {
         return fetchJson<T>(path, { ...options, method: "PATCH", body });
     },
-
     delete<T>(
         path: string,
         options?: Omit<FetchJsonOptions, "method" | "body">,
