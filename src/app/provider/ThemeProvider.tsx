@@ -10,6 +10,7 @@ import React, {
 import { ThemeContext, type Theme, type ThemeContextValue } from "./themeContext";
 
 const THEME_STORAGE_KEY = "admin-theme";
+const DEFAULT_UI_DENSITY = "comfortable";
 
 interface ThemeProviderProps {
     children: ReactNode;
@@ -57,6 +58,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         // 한 번만 theme-loaded 붙여서 body 보이게
         if (!root.classList.contains("theme-loaded")) {
             root.classList.add("theme-loaded");
+        }
+
+        if (!root.dataset.uiDensity) {
+            root.dataset.uiDensity = DEFAULT_UI_DENSITY;
         }
 
         if (theme === "dark") {

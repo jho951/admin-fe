@@ -4,7 +4,7 @@
  */
 import React from "react";
 import {useAppDispatch, useAppSelector} from "@app/hooks";
-import { Checkbox, Input } from "@jho951/ui-components";
+import {Checkbox, Form, Input, Label} from "@jho951/ui-components";
 import {
     updateEnableSignup,
     updateSiteTitle,
@@ -18,15 +18,16 @@ const SettingsForm: React.FC = () => {
     );
 
     return (
-        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            <label className={styles.field}>
-                <span>사이트 제목</span>
+        <Form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+            <Label htmlFor="setting-input" className={styles.field}>
+                사이트 제목
                 <Input
+                    id="setting-input"
                     value={siteTitle}
                     onChange={(e) => dispatch(updateSiteTitle(e.target.value))}
                     fullWidth
                 />
-            </label>
+            </Label>
 
             <label className={styles.checkboxField}>
                 <Checkbox
@@ -35,7 +36,7 @@ const SettingsForm: React.FC = () => {
                     label="회원가입 기능 활성화"
                 />
             </label>
-        </form>
+        </Form>
     );
 };
 

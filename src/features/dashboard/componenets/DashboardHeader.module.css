@@ -15,14 +15,7 @@
 
 .searchBox {
     flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-radius: 999px;
-    background-color: var(--color-surface);
-    padding: 10px 16px;
-    box-shadow: var(--shadow-xs);
-    border: 1px solid var(--color-border-light);
+    min-width: 0;
 }
 
 .searchIcon {
@@ -31,46 +24,20 @@
     opacity: 0.5;
 }
 
-.searchInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
-}
-
 .right {
     display: flex;
     align-items: center;
     gap: 12px;
     align-self: flex-end;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .dateButton {
     border-radius: 999px;
-    padding: 8px 14px;
-    background-color: transparent;
-    border: 1px solid var(--color-border-light);
-    font-size: 13px;
+    white-space: nowrap;
 }
 
 .viewToggle {
     display: inline-flex;
-    border-radius: 999px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border-light);
-    padding: 2px;
-}
-
-.viewBtn {
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 13px;
-    border: none;
-    background: transparent;
-}
-
-.viewBtnActive {
-    background-color: var(--color-text);
-    color: var(--color-white);
 }

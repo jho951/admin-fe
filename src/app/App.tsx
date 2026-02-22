@@ -12,8 +12,9 @@ import AppRouter from "@app/router.tsx";
 import {ThemeProvider} from "@app/provider/ThemeProvider";
 import {ContextMenuProvider} from "@app/provider/ContextMenuProvider.tsx";
 
-import "@app/style/index.css";
+import "@app/style/ui-components.css";
 import "@app/style/theme.css";
+import "@app/style/index.css";
 import "@app/style/font.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
