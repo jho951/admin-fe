@@ -7,7 +7,12 @@ import React, {
     useState,
     type ReactNode,
 } from "react";
-import { ThemeContext, type Theme, type ThemeContextValue } from "./themeContext";
+import {
+    ThemeContext,
+    type Theme,
+    type ThemeMode,
+    type ThemeContextValue,
+} from "./themeContext";
 
 const THEME_STORAGE_KEY = "admin-theme";
 const DEFAULT_UI_DENSITY = "comfortable";
@@ -16,18 +21,11 @@ interface ThemeProviderProps {
     children: ReactNode;
 }
 
-const getInitialTheme = (): Theme => {
+const getSystemTheme = (): Theme => {
     if (typeof window === "undefined") {
         return "light";
     }
 
-    // 1) localStorage 우선
-    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === "light" || stored === "dark") {
-        return stored;
-    }
-
-    // 2) 시스템 설정
     const prefersDark = window.matchMedia?.(
         "(prefers-color-scheme: dark)",
     ).matches;
@@ -35,19 +33,57 @@ const getInitialTheme = (): Theme => {
     return prefersDark ? "dark" : "light";
 };
 
+const getInitialThemeMode = (): ThemeMode => {
+    if (typeof window === "undefined") {
+        return "light";
+    }
+
+    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "light" || stored === "dark" || stored === "system") {
+        return stored;
+    }
+    return "system";
+};
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-    const [theme, setThemeState] = useState<Theme>(() => getInitialTheme());
+    const [themeMode, setThemeModeState] = useState<ThemeMode>(() => getInitialThemeMode());
+    const [systemTheme, setSystemTheme] = useState<Theme>(() => getSystemTheme());
+
+    const theme = themeMode === "system" ? systemTheme : themeMode;
 
     const setTheme = (next: Theme) => {
-        setThemeState(next);
+        setThemeMode(next);
+    };
+
+    const setThemeMode = (mode: ThemeMode) => {
+        setThemeModeState(mode);
         if (typeof window !== "undefined") {
-            window.localStorage.setItem(THEME_STORAGE_KEY, next);
+            window.localStorage.setItem(THEME_STORAGE_KEY, mode);
         }
     };
 
     const toggleTheme = () => {
         setTheme(theme === "light" ? "dark" : "light");
     };
+
+    useEffect(() => {
+        if (typeof window === "undefined" || !window.matchMedia) return;
+
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        const updateSystemTheme = (event?: MediaQueryListEvent) => {
+            setSystemTheme((event?.matches ?? media.matches) ? "dark" : "light");
+        };
+
+        updateSystemTheme();
+
+        if (typeof media.addEventListener === "function") {
+            media.addEventListener("change", updateSystemTheme);
+            return () => media.removeEventListener("change", updateSystemTheme);
+        }
+
+        media.addListener(updateSystemTheme);
+        return () => media.removeListener(updateSystemTheme);
+    }, []);
 
     // html 요소에 dark / theme-loaded 토글
     useEffect(() => {
@@ -72,9 +108,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }, [theme]);
 
     const value: ThemeContextValue = {
+        themeMode,
         theme,
         toggleTheme,
         setTheme,
+        setThemeMode,
     };
 
     return (

@@ -2,10 +2,11 @@
  * @file src/features/dashboard/componenets/LastTasksCard.tsx
  * @description 대시보드 화면 구성 컴포넌트을 담당하는 모듈입니다.
  */
-// src/features/dashboard/components/LastTasksCard.tsx
 import React from "react";
-import Card from "./Card";
+
+import {Card} from "@jho951/ui-components";
 import styles from "./LastTasksCard.module.css";
+
 
 interface TaskRow {
     id: number;
@@ -42,25 +43,28 @@ const mockTasks: TaskRow[] = [
 const LastTasksCard: React.FC = () => {
     return (
         <Card className={styles.card}>
-            <div className={styles.headerRow}>
-                <div>
-                    <h2 className={styles.title}>Last tasks</h2>
-                    <p className={styles.subtitle}>
-                        117 total, proceed to resolve them
-                    </p>
-                </div>
+            <Card.Header>
+                <div className={styles.headerRow}>
+                    <div>
+                        <h2 className={styles.title}>Last tasks</h2>
+                        <p className={styles.subtitle}>
+                            117 total, proceed to resolve them
+                        </p>
+                    </div>
 
-                <div className={styles.summary}>
-                    <div className={styles.summaryItem}>
-                        <span className={styles.summaryLabel}>Done</span>
-                        <span className={styles.summaryValue}>94</span>
-                    </div>
-                    <div className={styles.summaryItem}>
-                        <span className={styles.summaryLabel}>In progress</span>
-                        <span className={styles.summaryValue}>23</span>
+                    <div className={styles.summary}>
+                        <div className={styles.summaryItem}>
+                            <span className={styles.summaryLabel}>Done</span>
+                            <span className={styles.summaryValue}>94</span>
+                        </div>
+                        <div className={styles.summaryItem}>
+                            <span className={styles.summaryLabel}>In progress</span>
+                            <span className={styles.summaryValue}>23</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Card.Header>
+
 
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>

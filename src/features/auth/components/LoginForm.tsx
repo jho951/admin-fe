@@ -42,11 +42,17 @@ const LoginForm: React.FC = () => {
         }
 
         try {
-            const user = await login({ email, password });
-            dispatch(loginSuccess(user));
+            const { accessToken, user } = await login({ email, password });
+            dispatch(
+                loginSuccess({
+                    accessToken,
+                    username: user.username,
+                    email: user.email,
+                    role: user.role,
+                }),
+            );
             navigate("/dashboard");
         } catch (err) {
-            console.log(err)
             const message =
                 err instanceof Error ? err.message : "로그인에 실패했습니다.";
             setError(message);

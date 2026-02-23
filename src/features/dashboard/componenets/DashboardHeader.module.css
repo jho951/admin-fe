@@ -13,31 +13,6 @@
     }
 }
 
-.searchBox {
-    flex: 1;
-    min-width: 0;
-}
-
-.searchIcon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.5;
-}
-
-.right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    align-self: flex-end;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-.dateButton {
-    border-radius: 999px;
-    white-space: nowrap;
-}
-
 .viewToggle {
     display: inline-flex;
 }

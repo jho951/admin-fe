@@ -142,6 +142,20 @@
     height: 14px;
 }
 
+.navIconSvg {
+    width: 15px;
+    height: 15px;
+    color: currentColor;
+}
+
+.navIconSvg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 /* 라벨 */
 .labelWrap {
     flex: 1;

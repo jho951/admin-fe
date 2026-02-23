@@ -1,17 +1,10 @@
 /**
- * @file src/constants/sidebarItems.ts
+ * @file src/constants/LnbItems.ts
  * @description 프로젝트 전역 상수 정의을 담당하는 모듈입니다.
  */
-import type { IconName } from "@shared/components/icon/Icon";
+import type {LnbItem} from "@constants/lnb/LnbItems.types.ts";
 
-interface SidebarItem {
-    id: string;
-    label: string;
-    path: string;
-    icon: IconName;
-}
-
-export const SIDEBAR_ITEMS: SidebarItem[] = [
+export const LNB_ITEMS: LnbItem[] = [
     {
         id: "dashboard",
         label: "대시보드",

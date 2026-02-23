@@ -16,6 +16,11 @@ export interface LoginUser {
     role: "SUPER_ADMIN" | "ADMIN" | "MANAGER" | "USER";
 }
 
+export interface LoginResult {
+    accessToken: string | null;
+    user: LoginUser;
+}
+
 export interface BaseResponse<T> {
     success: boolean;
     code: string;
@@ -23,8 +28,49 @@ export interface BaseResponse<T> {
     data: T;
 }
 
-export async function login(payload: LoginPayload): Promise<LoginUser> {
-    const res = await fetchClient.post<BaseResponse<LoginUser>>(
+type LoginResponseData =
+    | LoginUser
+    | {
+          accessToken?: string;
+          token?: string;
+          user?: LoginUser;
+          member?: LoginUser;
+      };
+
+const isLoginUser = (value: unknown): value is LoginUser => {
+    if (!value || typeof value !== "object") return false;
+
+    const candidate = value as Partial<LoginUser>;
+    return (
+        typeof candidate.id === "number" &&
+        typeof candidate.username === "string" &&
+        typeof candidate.email === "string" &&
+        typeof candidate.role === "string"
+    );
+};
+
+const normalizeLoginResponse = (
+    data: LoginResponseData,
+): LoginResult => {
+    if (isLoginUser(data)) {
+        return {
+            accessToken: null,
+            user: data,
+        };
+    }
+
+    const accessToken = data.accessToken ?? data.token ?? null;
+    const user = data.user ?? data.member;
+
+    if (!user || !isLoginUser(user)) {
+        throw new Error("로그인 응답 형식이 올바르지 않습니다.");
+    }
+
+    return { accessToken, user };
+};
+
+export async function login(payload: LoginPayload): Promise<LoginResult> {
+    const res = await fetchClient.post<BaseResponse<LoginResponseData>>(
         "/api/auth/login",
         payload,
     );
@@ -33,5 +79,6 @@ export async function login(payload: LoginPayload): Promise<LoginUser> {
         throw new Error(res.message || "로그인에 실패했습니다.");
     }
 
-    return res.data;
+    const result = normalizeLoginResponse(res.data);
+    return result;
 }

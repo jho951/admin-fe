@@ -27,6 +27,8 @@ async function rawFetchJson<T>(
     const mergedHeaders = new Headers(headers ?? {});
     mergedHeaders.set("Accept", "application/json");
 
+    // HttpOnly 쿠키 기반 인증을 기본값으로 사용합니다.
+    // (하위 호환을 위해 메모리 토큰이 있을 때만 Authorization 헤더를 붙입니다.)
     const token = getAccessToken();
     if (token && !mergedHeaders.has("Authorization")) {
         mergedHeaders.set("Authorization", `Bearer ${token}`);
@@ -84,11 +86,22 @@ export async function fetchJson<T>(
         if (e.status === 401) {
             // refresh 시도
             try {
-                const refreshRes = await rawFetchJson<{
-                    data: { accessToken: string };
-                }>("/api/auth/refresh", { method: "POST" });
+                const refreshRes = await rawFetchJson<
+                    | { data?: { accessToken?: string | null } | null }
+                    | null
+                >("/api/auth/refresh", { method: "POST" });
 
-                const newToken = refreshRes.data.accessToken;
+                const newToken =
+                    refreshRes &&
+                    typeof refreshRes === "object" &&
+                    "data" in refreshRes &&
+                    refreshRes.data &&
+                    typeof refreshRes.data === "object" &&
+                    typeof refreshRes.data.accessToken === "string"
+                        ? refreshRes.data.accessToken
+                        : null;
+
+                // 쿠키-only(refresh가 Set-Cookie만 수행)인 경우 null일 수 있음.
                 setAccessToken(newToken);
 
                 // 다시 한 번 원래 요청 재시도

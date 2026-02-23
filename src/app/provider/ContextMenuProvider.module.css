@@ -1,0 +1,187 @@
+.layer {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--base-z-index) + 100);
+    pointer-events: none;
+}
+
+.menu {
+    position: fixed;
+    min-width: 220px;
+    max-width: min(320px, calc(100vw - 24px));
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid rgba(var(--color-black-rgb), 0.06);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(var(--color-white-rgb), 0.92),
+            rgba(var(--color-bg-gray-rgb), 0.9)
+        );
+    box-shadow:
+        0 20px 35px rgba(var(--color-black-rgb), 0.18),
+        0 2px 10px rgba(var(--color-black-rgb), 0.08),
+        inset 0 1px 0 rgba(var(--color-white-rgb), 0.65);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    pointer-events: auto;
+    overflow: hidden;
+    animation: menu-pop 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glow {
+    position: absolute;
+    inset: -20% auto auto -10%;
+    width: 160px;
+    height: 90px;
+    background: radial-gradient(
+        circle,
+        rgba(var(--color-primary-rgb), 0.28),
+        rgba(var(--color-primary-rgb), 0)
+    );
+    pointer-events: none;
+}
+
+.list {
+    position: relative;
+    display: grid;
+    gap: 4px;
+}
+
+.item {
+    list-style: none;
+}
+
+.button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--color-text);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: left;
+    transition:
+        background-color 120ms ease,
+        color 120ms ease,
+        transform 120ms ease,
+        box-shadow 120ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--color-primary-rgb), 0.12),
+        rgba(var(--color-primary-rgb), 0.07)
+    );
+    box-shadow:
+        inset 0 0 0 1px rgba(var(--color-primary-rgb), 0.18),
+        0 3px 8px rgba(var(--color-black-rgb), 0.05);
+    transform: translateY(-1px);
+}
+
+.button:focus-visible {
+    outline: 2px solid rgba(var(--color-primary-rgb), 0.35);
+    outline-offset: 1px;
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: rgba(var(--color-primary-rgb), 0.8);
+    box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb), 0.14);
+}
+
+.label {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.danger {
+    color: rgba(var(--color-danger-rgb), 0.95);
+}
+
+.danger .dot {
+    background: rgba(var(--color-danger-rgb), 0.9);
+    box-shadow: 0 0 0 4px rgba(var(--color-danger-rgb), 0.15);
+}
+
+.danger:hover,
+.danger:focus-visible {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--color-danger-rgb), 0.12),
+        rgba(var(--color-danger-rgb), 0.06)
+    );
+    box-shadow:
+        inset 0 0 0 1px rgba(var(--color-danger-rgb), 0.18),
+        0 3px 8px rgba(var(--color-black-rgb), 0.05);
+}
+
+@keyframes menu-pop {
+    from {
+        opacity: 0;
+        transform: translateY(4px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu {
+        animation: none;
+    }
+
+    .button {
+        transition: background-color 120ms ease, color 120ms ease;
+    }
+
+    .button:hover,
+    .button:focus-visible,
+    .button:active {
+        transform: none;
+    }
+}
+
+:global(html.dark) .menu {
+    border-color: rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(var(--color-bg-second-gray-rgb), 0.92),
+            rgba(var(--color-bg-gray-rgb), 0.95)
+        );
+    box-shadow:
+        0 22px 38px rgba(0, 0, 0, 0.45),
+        0 4px 14px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+:global(html.dark) .button:hover,
+:global(html.dark) .button:focus-visible {
+    box-shadow:
+        inset 0 0 0 1px rgba(var(--color-primary-rgb), 0.22),
+        0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+:global(html.dark) .danger:hover,
+:global(html.dark) .danger:focus-visible {
+    box-shadow:
+        inset 0 0 0 1px rgba(var(--color-danger-rgb), 0.24),
+        0 4px 10px rgba(0, 0, 0, 0.2);
+}

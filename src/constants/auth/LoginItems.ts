@@ -1,18 +1,10 @@
+import type {LoginItems} from "@constants/auth/LoginItems.types.ts";
+
 /**
- * @file src/constants/loginFields.ts
+ * @file src/constants/LoginItems.ts
  * @description 프로젝트 전역 상수 정의을 담당하는 모듈입니다.
  */
-export type LoginFieldId = "email" | "password";
-
-interface LoginField {
-    id: LoginFieldId;
-    label: string;
-    type: "email" | "password";
-    autoComplete: string;
-    placeholder: string;
-}
-
-export const LOGIN_FIELDS: LoginField[] = [
+export const LOGIN_FIELDS: LoginItems[] = [
     {
         id: "email",
         label: "이메일",

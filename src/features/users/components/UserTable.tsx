@@ -7,13 +7,15 @@ import { useAppSelector } from "@app/hooks";
 import { Table } from "@jho951/ui-components";
 import styles from "./UserTable.module.css";
 
+const columns = [
+    { key: "id", header: "ID" },
+    { key: "name", header: "이름" },
+    { key: "email", header: "이메일" },
+] as const;
+
 const UserTable: React.FC = () => {
     const users = useAppSelector((state) => state.users.items);
-    const columns = [
-        { key: "id", header: "ID" },
-        { key: "name", header: "이름" },
-        { key: "email", header: "이메일" },
-    ] as const;
+
 
     const rows = users.map((user) => ({
         id: String(user.id),

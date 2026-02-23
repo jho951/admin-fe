@@ -1,4 +1,22 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--base-black) 35%, transparent);
+}
+
 .loginModal {
+    width: min(100%, 480px);
+    border-radius: 1rem;
+    background: var(--base-white);
     box-shadow: var(--base-shadow);
     padding: 2rem 4rem;
+}
+
+@media (max-width: 640px) {
+    .loginModal {
+        padding: 1.25rem 1rem;
+    }
 }

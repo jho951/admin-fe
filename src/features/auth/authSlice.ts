@@ -12,15 +12,12 @@ interface AuthState {
     isAuthenticated: boolean; // 인증 여부 명시
 }
 
-// 초기 로드 시 로컬 스토리지 확인
-const token = localStorage.getItem("auth-token");
-
 const initialState: AuthState = {
-    accessToken: token,
+    accessToken: null,
     username: null,
     email: null,
     role: null,
-    isAuthenticated: !!token, // 토큰이 있으면 로그인된 것으로 간주
+    isAuthenticated: false,
 };
 
 const authSlice = createSlice({
@@ -43,11 +40,6 @@ const authSlice = createSlice({
             state.role = action.payload.role;
             state.isAuthenticated = true;
 
-            if (token) {
-                localStorage.setItem("auth-token", token);
-            } else {
-                localStorage.removeItem("auth-token");
-            }
         },
         restoreFromToken(
             state,
@@ -63,9 +55,6 @@ const authSlice = createSlice({
             state.email = null;
             state.role = null;
             state.isAuthenticated = false;
-
-            // 로컬 스토리지 삭제
-            localStorage.removeItem("auth-token");
         },
     },
 });

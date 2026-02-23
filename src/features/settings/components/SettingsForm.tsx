@@ -4,6 +4,7 @@
  */
 import React from "react";
 import {useAppDispatch, useAppSelector} from "@app/hooks";
+import { useTheme } from "@app/provider/themeContext";
 import {Checkbox, Form, Input, Label} from "@jho951/ui-components";
 import {
     updateEnableSignup,
@@ -13,6 +14,7 @@ import styles from "./SettingsForm.module.css";
 
 const SettingsForm: React.FC = () => {
     const dispatch = useAppDispatch();
+    const { themeMode, setThemeMode } = useTheme();
     const { siteTitle, enableSignup } = useAppSelector(
         (state) => state.settings,
     );
@@ -36,6 +38,43 @@ const SettingsForm: React.FC = () => {
                     label="회원가입 기능 활성화"
                 />
             </label>
+
+            <fieldset className={styles.themeFieldset}>
+                <legend className={styles.themeLegend}>테마 모드</legend>
+
+                <label className={styles.radioField}>
+                    <input
+                        type="radio"
+                        name="theme-mode"
+                        value="light"
+                        checked={themeMode === "light"}
+                        onChange={() => setThemeMode("light")}
+                    />
+                    <span>라이트</span>
+                </label>
+
+                <label className={styles.radioField}>
+                    <input
+                        type="radio"
+                        name="theme-mode"
+                        value="dark"
+                        checked={themeMode === "dark"}
+                        onChange={() => setThemeMode("dark")}
+                    />
+                    <span>다크</span>
+                </label>
+
+                <label className={styles.radioField}>
+                    <input
+                        type="radio"
+                        name="theme-mode"
+                        value="system"
+                        checked={themeMode === "system"}
+                        onChange={() => setThemeMode("system")}
+                    />
+                    <span>시스템 설정 따르기</span>
+                </label>
+            </fieldset>
         </Form>
     );
 };

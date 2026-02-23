@@ -14,7 +14,6 @@ import styles from "./DashboardPage.module.css";
 const DashboardPage: React.FC = () => {
     return (
         <section className={styles.page}>
-            <DashboardHeader />
             <LastTasksCard />
 
             <div className={styles.bottomGrid}>

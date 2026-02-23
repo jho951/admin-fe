@@ -3,17 +3,22 @@
  * @description 인증 기능 상태/요청/화면을 담당하는 모듈입니다.
  */
 import React from "react";
-import Modal from "@shared/components/modal/Modal";
 
 import LoginForm from "./LoginForm";
-
-import styles from "./LoginModal.module.css"
+import styles from "./LoginModal.module.css";
 
 const LoginModal: React.FC = () => {
     return (
-        <Modal className={styles.loginModal} isOpen width={480}>
-            <LoginForm />
-        </Modal>
+        <div className={styles.overlay}>
+            <div
+                className={styles.loginModal}
+                role="dialog"
+                aria-modal="true"
+                aria-label="로그인"
+            >
+                <LoginForm />
+            </div>
+        </div>
     );
 };
 

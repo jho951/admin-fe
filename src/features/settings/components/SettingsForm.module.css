@@ -1,7 +1,8 @@
 .form {
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     border-radius: 0.75rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-xs);
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -13,6 +14,7 @@
     flex-direction: column;
     gap: 0.25rem;
     font-size: 0.9rem;
+    color: var(--color-text);
 }
 
 .input {
@@ -26,4 +28,39 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
+    color: var(--color-text);
+}
+
+.themeFieldset {
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    display: grid;
+    gap: 0.5rem;
+    background: rgba(var(--color-bg-gray-rgb), 0.35);
+}
+
+.themeLegend {
+    padding: 0 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+
+.radioField {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.radioField:hover {
+    background: rgba(var(--color-primary-rgb), 0.06);
+}
+
+.radioField input {
+    accent-color: var(--color-primary);
 }
